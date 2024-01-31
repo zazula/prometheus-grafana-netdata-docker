@@ -8,8 +8,8 @@ services:
      - ./monitor/prometheus.yml:/etc/prometheus/prometheus.yml
     command: "--config.file=/etc/prometheus/prometheus.yml --storage.tsdb.path=/prometheus --storage.tsdb.retention.time=2d"
     ports:
-
      - 9090:9090
+
   grafana:
     image: grafana/grafana
     container_name: grafana
@@ -24,9 +24,13 @@ services:
 
   netdata:
     image: netdata/netdata
+    runtime: nvidia
     container_name: netdata
     restart: always
     hostname: netdata.local # set to fqdn of host
+    environment:
+      - NVIDIA_VISIBLE_DEVICES=all
+      - NVIDIA_DRIVER_CAPABILITIES=all
     ports:
       - 19999:19999
     cap_add:
@@ -54,3 +58,28 @@ services:
     devices:
       - /dev/kmsg
 
+  vastai:
+    image: 500farm/vastai-exporter
+    container_name: vastai
+    restart: always
+    ports:
+      - 8622:8622
+    command: "--key eb0a6101aac683187bd527ba435c237a0ea6c5345462f6b63b217e662f5af574 --state-dir=/var/run/vastai-exporter --master-url=https://500.farm/vastai-exporter"
+
+  nvidia:
+    image: nvcr.io/nvidia/k8s/dcgm-exporter:3.3.3-3.3.0-ubuntu22.04
+    container_name: nvidia
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [ gpu ]
+    restart: always
+    environment:
+      - DCGM_EXPORTER_NO_HOSTNAME=1
+    cap_add:
+      - SYS_ADMIN
+    ports:
+      - "9400:9400"
