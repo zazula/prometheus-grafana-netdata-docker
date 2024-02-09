@@ -36,28 +36,48 @@ scrape_configs:
       format: [ prometheus ]
 
     static_configs:
-      - targets: ['192.168.0.10:19999']
+      - targets: ["192.168.0.10:19999", "192.168.0.24:19999", "192.168.0.24:29999", "192.168.0.26:19999", "192.168.0.27:19999", "192.168.0.28:19999", "192.168.0.26:29999", "192.168.0.27:29999", "192.168.0.28:29999"]
 
   - job_name: docker
       # metrics_path defaults to '/metrics'
       # scheme defaults to 'http'.
 
     static_configs:
-      - targets: ["192.168.0.10:9323"]
+      # lambda, hydra-3, hydra-2, hydra-1, hydra-?:vastai-docker
+      - targets: ["192.168.0.10:9323", "192.168.0.24:9323", "192.168.0.24:19323", "192.168.0.26:9323", "192.168.0.26:19323", "192.168.0.27:9323", "192.168.0.27:19323", "192.168.0.28:9323", "192.168.0.28:19323"]
 
   - job_name: cadvisor
       # metrics_path defaults to '/metrics'
       # scheme defaults to 'http'.
 
     static_configs:
-      - targets: ["192.168.0.10:8080"]
+      - targets: ["192.168.0.10:8080", "192.168.0.24:8080", "192.168.0.26:8080", "192.168.0.27:8080", "192.168.0.28:8080"]
 
   - job_name: vastai
-
     static_configs:
       - targets: ["192.168.0.10:8622"]
 
+  - job_name: vastai_global
+    metrics_path: /metrics/global
+    static_configs:
+      - targets: ["192.168.0.10:8622"]                                                                                                                                                                   
+
   - job_name: nvidia
     static_configs:
-      - targets: ["192.168.0.10:9400"]
+      - targets: ["192.168.0.10:9400", "192.168.0.24:9400", "192.168.0.26:9400", "192.168.0.27:9400", "192.168.0.28:9400"]
+
+  - job_name: vastai_offers
+    metrics_path: /
+    scrape_interval: 1m
+    scrape_timeout: 30s
+    static_configs:
+      - targets: ["192.168.0.10:8888"]
+
+  - job_name: journald-exporter                                                                                                                                                                                       
+    basic_auth:
+      username: metrics
+      password_file: /etc/prometheus/journald-exporter.key
+    scheme: http
+    static_configs:                                                                                                                                                                                                   
+      - targets: ["192.168.0.195:12345"]                                                                                                                                                                              
 
