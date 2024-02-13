@@ -36,7 +36,7 @@ scrape_configs:
       format: [ prometheus ]
 
     static_configs:
-      - targets: ["192.168.0.10:19999", "192.168.0.24:19999", "192.168.0.24:29999", "192.168.0.26:19999", "192.168.0.27:19999", "192.168.0.28:19999", "192.168.0.26:29999", "192.168.0.27:29999", "192.168.0.28:29999"]
+      - targets: ["192.168.0.10:19999", "192.168.0.24:19999", "192.168.0.24:29999", "192.168.0.26:19999", "192.168.0.27:19999", "192.168.0.28:19999", "192.168.0.26:29999", "192.168.0.27:29999", "192.168.0.28:29999", "192.168.0.195:19999", "192.168.0.195:29999"]
 
   - job_name: docker
       # metrics_path defaults to '/metrics'
@@ -64,7 +64,7 @@ scrape_configs:
 
   - job_name: nvidia
     static_configs:
-      - targets: ["192.168.0.10:9400", "192.168.0.24:9400", "192.168.0.26:9400", "192.168.0.27:9400", "192.168.0.28:9400"]
+      - targets: ["192.168.0.10:9400", "192.168.0.24:19400", "192.168.0.26:9400", "192.168.0.27:9400", "192.168.0.28:9400"]
 
   - job_name: vastai_offers
     metrics_path: /
@@ -73,11 +73,11 @@ scrape_configs:
     static_configs:
       - targets: ["192.168.0.10:8888"]
 
-  - job_name: journald-exporter                                                                                                                                                                                       
+  - job_name: journald-exporter
     basic_auth:
       username: metrics
       password_file: /etc/prometheus/journald-exporter.key
     scheme: http
-    static_configs:                                                                                                                                                                                                   
-      - targets: ["192.168.0.195:12345"]                                                                                                                                                                              
+    static_configs:
+      - targets: ["192.168.0.195:12345"] 
 
