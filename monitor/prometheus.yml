@@ -90,17 +90,17 @@ scrape_configs:
       - source_labels: [_HOSTNAME]
         regex: "4a472c4a35cb"
         replacement: "hydra-vast-1"
-        target_label: "_HOSTNAME" 
+        target_label: "__HOSTNAME" 
       - source_labels: [_HOSTNAME]
         regex: "bcfa068eeed8"
         replacement: "hydra-vast-2"
-        target_label: "_HOSTNAME"
+        target_label: "__HOSTNAME"
       - source_labels: [_HOSTNAME]
         regex: "ee61c4fa8ccf"
         replacement: "hydra-vast-3"
-        target_label: "_HOSTNAME"
+        target_label: "__HOSTNAME"
       - source_labels: [_HOSTNAME]
         regex: "1440c96d98e4"
         replacement: "hydra-vast-4"
-        target_label: "_HOSTNAME"
+        target_label: "__HOSTNAME"
 
