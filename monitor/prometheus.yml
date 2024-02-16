@@ -102,5 +102,4 @@ scrape_configs:
       - source_labels: [_HOSTNAME]
         regex: "2111213acc36"
         replacement: "hydra-vast-4"
-        target_label: "_HOSTNAME"]
-        
+        target_label: "_HOSTNAME"
