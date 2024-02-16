@@ -35,8 +35,14 @@ scrape_configs:
     params:
       format: [ prometheus ]
 
+    # 29999 - main host, 19999 - virtual host
     static_configs:
-      - targets: ["192.168.0.10:19999", "192.168.0.24:19999", "192.168.0.24:29999", "192.168.0.26:19999", "192.168.0.27:19999", "192.168.0.28:19999", "192.168.0.26:29999", "192.168.0.27:29999", "192.168.0.28:29999", "192.168.0.195:19999", "192.168.0.195:29999"]
+      - targets: ["192.168.0.10:19999", 
+	"192.168.0.24:19999", "192.168.0.24:29999", 
+	"192.168.0.26:19999", "192.168.0.26:29999",
+	"192.168.0.27:19999", "192.168.0.27:29999",
+	"192.168.0.28:19999", "192.168.0.28:29999", 
+	"192.168.0.195:19999", "192.168.0.195:29999"]
 
   - job_name: docker
       # metrics_path defaults to '/metrics'
@@ -44,7 +50,7 @@ scrape_configs:
 
     static_configs:
       # lambda, hydra-3, hydra-2, hydra-1, hydra-?:vastai-docker
-      - targets: ["192.168.0.10:9323", "192.168.0.24:9323", "192.168.0.24:19323", "192.168.0.26:9323", "192.168.0.26:19323", "192.168.0.27:9323", "192.168.0.27:19323", "192.168.0.28:9323", "192.168.0.28:19323"]
+      - targets: ["192.168.0.10:9323", "192.168.0.24:19323", "192.168.0.26:9323", "192.168.0.26:19323", "192.168.0.27:9323", "192.168.0.27:19323", "192.168.0.28:9323", "192.168.0.28:19323"]
 
   - job_name: cadvisor
       # metrics_path defaults to '/metrics'
@@ -64,7 +70,7 @@ scrape_configs:
 
   - job_name: nvidia
     static_configs:
-      - targets: ["192.168.0.10:9400", "192.168.0.24:19400", "192.168.0.26:9400", "192.168.0.27:9400", "192.168.0.28:9400"]
+      - targets: ["192.168.0.10:9400", "192.168.0.24:9400", "192.168.0.26:9400", "192.168.0.27:9400", "192.168.0.28:9400"]
 
   - job_name: vastai_offers
     metrics_path: /
@@ -79,5 +85,22 @@ scrape_configs:
       password_file: /etc/prometheus/journald-exporter.key
     scheme: http
     static_configs:
-      - targets: ["192.168.0.195:12345"] 
+      - targets: ["192.168.0.10:12345"] 
+    metric_relabel_configs:
+      - source_labels: [_HOSTNAME]
+        regex: "4a472c4a35cb"
+        replacement: "hydra-vast-1"
+        target_label: "_HOSTNAME" 
+      - source_labels: [_HOSTNAME]
+        regex: "bcfa068eeed8"
+        replacement: "hydra-vast-2"
+        target_label: "_HOSTNAME"
+      - source_labels: [_HOSTNAME]
+        regex: "ee61c4fa8ccf"
+        replacement: "hydra-vast-3"
+        target_label: "_HOSTNAME"
+      - source_labels: [_HOSTNAME]
+        regex: "1440c96d98e4"
+        replacement: "hydra-vast-4"
+        target_label: "_HOSTNAME"
 
