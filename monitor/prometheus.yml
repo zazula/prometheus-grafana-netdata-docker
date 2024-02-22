@@ -41,8 +41,7 @@ scrape_configs:
 	"192.168.0.24:19999", "192.168.0.24:29999", 
 	"192.168.0.26:19999", "192.168.0.26:29999",
 	"192.168.0.27:19999", "192.168.0.27:29999",
-	"192.168.0.28:19999", "192.168.0.28:29999", 
-	"192.168.0.195:19999", "192.168.0.195:29999"]
+	"192.168.0.28:19999", "192.168.0.28:29999"]
 
   - job_name: docker
       # metrics_path defaults to '/metrics'
@@ -70,9 +69,9 @@ scrape_configs:
 
   - job_name: nvidia
     static_configs:
-      - targets: ["192.168.0.10:9400", "192.168.0.24:9400", "192.168.0.26:9400", "192.168.0.27:9400", "192.168.0.28:9400"]
+      - targets: ["192.168.0.10:9400", "192.168.0.24:9400", "192.168.0.26:19400", "192.168.0.27:19400", "192.168.0.28:9400"]
 
-  - job_name: vastai_offers
+  - job_name: rz_vastai_offers
     metrics_path: /
     scrape_interval: 1m
     scrape_timeout: 30s
@@ -103,3 +102,4 @@ scrape_configs:
         regex: "2111213acc36"
         replacement: "hydra-vast-4"
         target_label: "_HOSTNAME"
+
